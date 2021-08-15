@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1 class="page-header">About</h1>
+<p>This webpage is used for provide service for android TuTi-app.</p>
+<p>I was buit this web-server for only my son who named TuTi (Nguyễn Nhật Minh).</p>
+<p>
+    <a href="{{ url_for('tuti_service.download_apk') }}">To use android app, please download here.</a>
+</p>
+<p><br>Development by {{ name }}</p>
+{% endblock %}

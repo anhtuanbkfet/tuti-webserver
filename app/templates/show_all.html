@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<h2>All Items</h2>
+<table class=tb_actions style="width:100%">
+    <tr>
+        <th colspan=4>id</th>
+        <th colspan=4>type</th>
+        <th colspan=4>time start</th>
+        <th colspan=4>description</th>
+        <th colspan=4>last action</th>
+        <th colspan=4>is lastest</th>
+    </tr>
+    {%- for action in action_list %}
+    <tr class=text>
+        <td colspan=4> {{ action.action_id }} </td>
+        <td colspan=4>{{ action.action_type }}</td>
+        <td colspan=4>{{ action.time_start }}</td>
+        <td colspan=4>{{ action.description }}</td>
+        <td colspan=4>{{action.last_action_id}}</td>
+        <td colspan=4>{{action.is_latest_action}}</td>
+    </tr> 
+    {%- endfor %}
+</table>
+
+{% endblock %}

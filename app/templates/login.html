@@ -1,0 +1,39 @@
+<!-- templates/login.html -->
+
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="container">
+  <h1 class="page-header">User login</h1>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  <!-- jumbotron -->
+  <div class="jumbotron">
+    <form method="POST" action="{{ url_for('auth.login', next=request.endpoint) }}">
+        {{ form.csrf_token }}
+      <div class="form-group">
+        {{ form.username.label }} {{ form.username(size=20, class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.password.label }} {{ form.password(size=20, class="form-control", type="password") }}
+      </div>
+      <!-- Checkbox to remember accout -->
+      <div class="checkbox">
+        <label><input type="checkbox">Remember me</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

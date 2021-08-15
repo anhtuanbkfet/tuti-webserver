@@ -1,0 +1,17 @@
+flask == 1.1.1
+Werkzeug==0.15.3
+gunicorn==19.6.0
+pathlib2==2.3.5
+flask_login
+humanize
+Blueprint
+wtforms
+flask_login
+flask_sqlalchemy
+flask_wtf
+Pillow
+piexif
+flask_fontawesome
+flask_dropzone
+psycopg2==2.7.3.1
+boto3==1.14.9

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1 class="page-header">Web-service for Easy TuTi android app</h1>
+
+<p class="lead">This web-service provices sync engine, and store some data related to my son (Nguyễn Nhật Minh)<br>
+    You may also use some functions, like Upload/Download images, videos.<br>
+    {% if not current_user.is_authenticated %}
+    You can just access that contents after
+    <a href="{{ url_for('auth.login') }}">login. </a>
+</p>
+
+{% endif %}
+
+<a href="{{ url_for('tuti_service.download_apk') }}">To use android app, please download here.</a>
+
+<div class="container has-text-centered">
+    {% block content %}
+    {% endblock %}
+</div>
+
+{% endblock %}s

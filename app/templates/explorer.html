@@ -1,0 +1,112 @@
+<!-- File browser -->
+
+{% extends "base.html" %}
+
+{% block css %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="generator" content="Bootstrap Listr">
+
+<!-- For link browser -->
+<link rel="stylesheet" href="{{url_for('static', filename='css/custom.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/listr.pack.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/jquery.filer.css')}}">
+{% endblock%}
+
+{% block main %}
+
+<div class='container'>
+    
+    <div class = 'row mt-4'>
+
+    {% for f_name in dirList %}
+        <div class="col-md-2 col-sm-4 col-6 mt-2">
+                <div class="thumbnail hvr-shadow">
+                    <a href="/expr/{{currentDir}}%{{ f_name }}">
+                        <input type="checkbox" style="display:inline-block; position:absolute; margin:.25rem;"/>
+                        <img src = '/static/folder.png' class='img-thumbnail' style="border:0px;"/><p style="color:black; text-align:center; text-decoration:none;">{{f_name[:15]}}</p>
+                    </a>
+                </div>
+        </div>
+    
+    {% endfor %}
+    </div>
+</div>
+
+
+
+<div class='container'>
+    
+    <div class = 'row mt-4'>
+        
+    {% for f_name, preview in fileList %}
+    
+        <div class="col-md-2 col-sm-4 col-6 mt-2">
+            <div class="thumbnail hvr-glow">
+                <a href="/view/{{ currentDir }}%{{ f_name }}">
+                     <input type="checkbox" style="display:inline-block; position:absolute; margin:.25rem;"/>
+                {% if ('.jpg' in  f_name.lower()) or ('.jpeg' in f_name.lower()) %}
+                    <img src = "data:image/jpeg;charset=utf-8;base64, {{ preview }}" class='img-thumbnail' style="border:0px"/>                    
+                {% elif ('.png' in f_name.lower()) %} 
+                    <img src = '/static/png.png' class='img-thumbnail' style="border:0px"/>
+                {% elif ('.mp4' in f_name.lower()) %} 
+                    <img src = '/static/mp4.png' class='img-thumbnail' style="border:0px"/>
+                {% else %} 
+                    <img src = '/static/file-icon.png' class='img-thumbnail' style="border:0px"/>
+                {% endif %}
+                        <p style="color:black; text-align:center;">{{f_name[:15]}}</p>
+                </a>         
+            </div>
+        </div>
+    
+    {% endfor %}
+    </div>
+</div>
+
+
+<div class='container'>
+
+    <form action="/upload/{{currentDir}}" method="POST" enctype="multipart/form-data" class="dropzone" id="dropzone"></form>
+
+</div>
+
+
+{{ dropzone.load_js() }}
+
+<script>
+    Dropzone.autoDiscover = false;
+    var dropzone = new Dropzone("form#dropzone", {
+          init: function() {
+            var self = this;
+            self.on("queuecomplete", function(progress) { //refresh page when all files loaded
+                console.log("Queue Complete.");
+                location.reload();
+            });
+          },
+          uploadMultiple: true,
+          parallelUploads: 3,
+          paramName: "file", // The name that will be used to transfer the file
+          maxFilesize: 10, // MB
+          acceptedFiles: "image/*",
+          maxFiles: 50,
+          dictDefaultMessage: `Drop files here or click to upload.`, // message display on drop area
+          dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
+          dictInvalidFileType: "You can't upload files of this type.",
+          dictFileTooBig: "File is too big {{filesize}}. Max filesize: {{maxFilesize}}MiB.",
+          dictResponseError: "Server error: {{statusCode}}",
+          dictMaxFilesExceeded: "Your can't upload any more files.",
+        });    
+</script>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/tether.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/listr.pack.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery.filer.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/jquery.base64.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/custom.js')}}"></script>
+{% endblock%}
